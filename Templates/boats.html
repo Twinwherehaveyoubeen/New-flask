@@ -2,13 +2,36 @@
 
 {% block body %}
     <h1>Boat List</h1>
-    <a href="{{ url_for('createboat') }}">Add New Boat</a>
     
+    
+    <form method="POST" action="{{ url_for('boats') }}">
+        <h2>{% if edit_mode %}Edit Boat{% else %}Add a New Boat{% endif %}</h2>
+        <label for="id">Boat ID (for editing only):</label>
+        <input type="number" name="id" id="id" {% if edit_mode %}value="{{ boat.id }}" readonly{% endif %}>
+
+        <label for="name">Boat Name:</label>
+        <input type="text" name="name" id="name" required value="{{ boat.name if edit_mode else '' }}">
+
+        <label for="type">Boat Type:</label>
+        <input type="text" name="type" id="type" required value="{{ boat.type if edit_mode else '' }}">
+
+        <label for="ouwner_id">Owner ID:</label>
+        <input type="number" name="ouwner_id" id="ouwner_id" required value="{{ boat.ouwner_id if edit_mode else '' }}">
+
+        <label for="rental_price">Rental Price:</label>
+        <input type="number" name="rental_price" id="rental_price" step="0.01" required value="{{ boat.rental_price if edit_mode else '' }}">
+
+        <button type="submit">{% if edit_mode %}Update Boat{% else %}Add Boat{% endif %}</button>
+    </form>
+
+    
+    <h2>Search for a Boat</h2>
     <form method="GET" action="{{ url_for('boats') }}">
         <input type="text" name="search" placeholder="Search by ID, Name, or Type" value="{{ search_query }}">
         <button type="submit">Search</button>
     </form>
-    
+
+   
     <table border="1" cellpadding="5">
         <tr>
             <th>ID</th>
@@ -18,7 +41,7 @@
             <th>Rental Price</th>
             <th>Actions</th>
         </tr>
-        {% for boat in boats %}  
+        {% for boat in boats %}
         <tr>
             <td>{{ boat.id }}</td>
             <td>{{ boat.name }}</td>
@@ -26,7 +49,7 @@
             <td>{{ boat.ouwner_id }}</td>
             <td>{{ boat.rental_price }}</td>
             <td>
-                <a href="{{ url_for('updateboat', boat_id=boat.id) }}">Edit</a>
+                <a href="{{ url_for('boats', edit_mode=True, boat_id=boat.id) }}">Edit</a>
                 <form action="{{ url_for('deleteboat', boat_id=boat.id) }}" method="POST" style="display:inline;">
                     <button type="submit">Delete</button>
                 </form>
