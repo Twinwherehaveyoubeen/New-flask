@@ -34,7 +34,7 @@
     <h1>Add / Update Boat</h1>
     <div class="body">
         <div class="form-container">
-            <form method="POST">
+          <form method="POST" action="{% if boat %}{{ url_for('updateboat', boat_id=boat.id) }}{% else %}{{ url_for('createboat') }}{% endif %}">
                 <label for="id">Boat ID</label>
                 <input type="number" name="id" id="id" placeholder="Enter ID" class="input_field" required min="1" value="{{ boat.id if boat else '' }}">
 
@@ -45,7 +45,7 @@
                 <input type="text" name="type" id="type" placeholder="Enter Boat Type" class="input_field" required maxlength="50" value="{{ boat.type if boat else '' }}">
 
                 <label for="owner_id">Owner ID</label>
-                <input type="number" name="owner_id" id="owner_id" placeholder="Enter Owner ID" class="input_field" required min="1" value="{{ boat.owner_id if boat else '' }}">
+                <input type="number" name="owner_id" id="ouwner_id" placeholder="Enter Owner ID" class="input_field" required min="1" value="{{ boat.owner_id if boat else '' }}">
 
                 <label for="rental_price">Rental Price</label>
                 <input type="number" name="rental_price" id="rental_price" placeholder="Enter Rental Price" class="input_field" step="0.01" required min="0" value="{{ boat.rental_price if boat else '' }}">
