@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+
+{% block body %}
+
+    {% for boat in boats %}
+    <ul>
+        <li>{{boats[0]}}</li>
+        <li>{{boats[1]}}</li>
+        <li>{{boats[2]}}</li>
+        <li>{{boats[3]}}</li>
+        <li>{{boats[4]}}</li>
+    </ul>
+    <!-- {{boats [0]}}
+    {{boats [1]}}
+    {{boats [2]}}
+    {{boats [3]}}
+    {{boats [4]}} -->
+    {% endfor %}
+
+{% endblock %}
