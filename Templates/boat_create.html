@@ -28,19 +28,31 @@
     }
 </style>
 
-{% extends "base.html" %}
+{% extends 'base.html' %}
+
 {% block body %}
-{% if error %}
-    {{success}}
-{% endif %}
+    <h1>Add / Update Boat</h1>
     <div class="body">
-        <form action="/boatcreate" method="POST">
-            <input type="number" name="id" placeholder="ID" class="input_field"> <br>
-            <input type="text" name="name" placeholder="Boat name" class="input_field"> <br>
-            <input type="text" name="type" placeholder="Boat type" class="input_field"> <br>
-            <input type="number" name="owner_id" placeholder="Owner ID" class="input_field"> <br>
-            <input type="number" name="rental_price" placeholder="Rental price" class="input_field" step="0.01"> <br>
-            <input type="submit" value="Submit" class="input_submit">
-        </form>
+        <div class="form-container">
+            <form method="POST">
+                <label for="id">Boat ID</label>
+                <input type="number" name="id" id="id" placeholder="Enter ID" class="input_field" required min="1" value="{{ boat.id if boat else '' }}">
+
+                <label for="name">Boat Name</label>
+                <input type="text" name="name" id="name" placeholder="Enter Boat Name" class="input_field" required maxlength="50" value="{{ boat.name if boat else '' }}">
+
+                <label for="type">Boat Type</label>
+                <input type="text" name="type" id="type" placeholder="Enter Boat Type" class="input_field" required maxlength="50" value="{{ boat.type if boat else '' }}">
+
+                <label for="owner_id">Owner ID</label>
+                <input type="number" name="owner_id" id="owner_id" placeholder="Enter Owner ID" class="input_field" required min="1" value="{{ boat.owner_id if boat else '' }}">
+
+                <label for="rental_price">Rental Price</label>
+                <input type="number" name="rental_price" id="rental_price" placeholder="Enter Rental Price" class="input_field" step="0.01" required min="0" value="{{ boat.rental_price if boat else '' }}">
+                
+                <input type="submit" value="{% if boat %}Update{% else %}Add{% endif %} Boat" class="input_submit">
+            </form>
+            <a href="{{ url_for('boats') }}">Back to Boats</a>
+        </div>
     </div>
 {% endblock %}

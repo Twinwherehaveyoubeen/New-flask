@@ -1,20 +1,37 @@
 {% extends 'base.html' %}
 
 {% block body %}
-
-    {% for boat in boats %}
-    <ul>
-        <li>{{boats[0]}}</li>
-        <li>{{boats[1]}}</li>
-        <li>{{boats[2]}}</li>
-        <li>{{boats[3]}}</li>
-        <li>{{boats[4]}}</li>
-    </ul>
-    <!-- {{boats [0]}}
-    {{boats [1]}}
-    {{boats [2]}}
-    {{boats [3]}}
-    {{boats [4]}} -->
-    {% endfor %}
-
+    <h1>Boat List</h1>
+    <a href="{{ url_for('createboat') }}">Add New Boat</a>
+    
+    <form method="GET" action="{{ url_for('boats') }}">
+        <input type="text" name="search" placeholder="Search by ID, Name, or Type" value="{{ search_query }}">
+        <button type="submit">Search</button>
+    </form>
+    
+    <table border="1" cellpadding="5">
+        <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Type</th>
+            <th>Owner ID</th>
+            <th>Rental Price</th>
+            <th>Actions</th>
+        </tr>
+        {% for boat in boats %}  
+        <tr>
+            <td>{{ boat.id }}</td>
+            <td>{{ boat.name }}</td>
+            <td>{{ boat.type }}</td>
+            <td>{{ boat.ouwner_id }}</td>
+            <td>{{ boat.rental_price }}</td>
+            <td>
+                <a href="{{ url_for('updateboat', boat_id=boat.id) }}">Edit</a>
+                <form action="{{ url_for('deleteboat', boat_id=boat.id) }}" method="POST" style="display:inline;">
+                    <button type="submit">Delete</button>
+                </form>
+            </td>
+        </tr>
+        {% endfor %}
+    </table>
 {% endblock %}
